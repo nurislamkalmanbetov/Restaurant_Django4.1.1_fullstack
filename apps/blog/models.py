@@ -25,6 +25,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     is_draft = models.BooleanField("Черновик", default=True) 
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True, related_name="posts")
     
     class Meta:
         verbose_name = "Пост"
