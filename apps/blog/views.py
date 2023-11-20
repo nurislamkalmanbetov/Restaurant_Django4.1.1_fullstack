@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from apps.blog.models import Category, Post
 from django.contrib.auth.models import User
 
@@ -52,7 +52,22 @@ class PostListView(TemplateView):
         return Post.objects.filter(is_draft=False)
     
 
+class PostDetailView(DetailView):
+    template_name = "post_detail.html"
+    model = Post
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts'] = Post.objects.filter(is_draft=False) 
+        latest_four_posts = Post.objects.filter(is_draft=False).order_by('-created') 
+        if len(latest_four_posts) < 4:
+            context["latest_four_posts"] = latest_four_posts
+        else:
+            context["latest_four_posts"] = latest_four_posts[:4]
+
+        context["categories"] = Category.objects.all()
+
+        return context
 
 
 
