@@ -156,9 +156,11 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
-                                            <i class="flaticon-profile"></i>Войти
-                                        </button>
+                                        <a href="{% url 'login' %}">
+                                            <button type="button" class="login-btn">
+                                                <i class="flaticon-profile"></i>Войти
+                                            </button>
+                                        </a>
                                     </li>
                                     <li>
                                         <a href="submit-recipe.html" class="fill-btn"><i class="flaticon-plus-1"></i>Добавить Рецепт</a>

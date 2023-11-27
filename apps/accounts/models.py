@@ -1,10 +1,6 @@
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
-
-
 
 class UserManager(BaseUserManager):
     def create_user(self, email=None, password=None, **extra_fields):
@@ -13,7 +9,8 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        return user 
+        user.save()
+        return user
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
@@ -26,23 +23,23 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
         return self.create_user(email, password, **extra_fields)
 
-
 class User(AbstractUser):
     username = None
-    email = models.EmailField("Электронная почта", unique=True)
-    profile_img = models.ImageField(upload_to="/users/profiles/",blank=True)
-    about = models.TextField("О себе", null=True,blank=True)
+    email = models.EmailField("Email", unique=True)
+    profile_img = models.ImageField(upload_to="users/profiles/", blank=True)
+    about = models.TextField("О себе", null=True, blank=True)
     instagram = models.URLField()
+    middle_name = models.CharField('Отчество', max_length=150, blank=True)
+    phone = models.CharField('Номер телефона', null=True, max_length=10)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = UserManager()
 
+    def __str__(self):
+        return self.email
+
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
-
-    def __str__(self):
-        return self.email 
-
