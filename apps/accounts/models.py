@@ -1,4 +1,6 @@
 from django.db import models
+
+# Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 
@@ -13,6 +15,9 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **extra_fields):
+        """
+        Create and save a SuperUser with the given email and password.
+        """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -25,23 +30,21 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    email = models.EmailField("Email", unique=True)
-    first_name = models.CharField('Имя', max_length=150, blank=True)
-    middle_name = models.CharField('Отчество', max_length=150, blank=True)
-    last_name = models.CharField('Фамилия', max_length=150, blank=True)
-    profile_img = models.ImageField(upload_to="users/profiles/", blank=True)
-    about = models.TextField("О себе", null=True, blank=True)
-    instagram = models.URLField()
-    phone = models.CharField('Номер телефона', null=True, max_length=10)
+    username = None
+    email = models.EmailField("Электронная почта", unique=True)
+    profile_img = models.ImageField(upload_to="users/profiles/", blank=True,null=True)
+    about = models.TextField("О себе", null=True,blank=True)
+    instagram = models.URLField(null=True, blank=True)
     
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email' # Какое поле будет использоваться в логинке
     REQUIRED_FIELDS = []
 
     objects = UserManager()
 
-    def __str__(self):
-        return self.email
-
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
+
+    def __str__(self):
+        return self.email

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, TemplateView
 from django.contrib.auth import login, logout, authenticate
 from django.urls import reverse_lazy
 from django.http import HttpResponse
@@ -40,4 +40,9 @@ class UserRegisterView(CreateView):
     template_name = "register.html"
     form_class = UserRegisterForm
     model = User 
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('register_done')
+
+
+
+class RegisterDoneView(TemplateView):
+    template_name = "register_done.html"
