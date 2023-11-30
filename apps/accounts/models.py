@@ -23,15 +23,17 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
         return self.create_user(email, password, **extra_fields)
 
+
 class User(AbstractUser):
-    username = None
     email = models.EmailField("Email", unique=True)
+    first_name = models.CharField('Имя', max_length=150, blank=True)
+    middle_name = models.CharField('Отчество', max_length=150, blank=True)
+    last_name = models.CharField('Фамилия', max_length=150, blank=True)
     profile_img = models.ImageField(upload_to="users/profiles/", blank=True)
     about = models.TextField("О себе", null=True, blank=True)
     instagram = models.URLField()
-    middle_name = models.CharField('Отчество', max_length=150, blank=True)
     phone = models.CharField('Номер телефона', null=True, max_length=10)
-
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
