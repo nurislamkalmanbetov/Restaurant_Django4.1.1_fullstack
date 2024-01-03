@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, FormView
 from apps.blog.models import Category, Post
 from django.contrib.auth.models import User
 
@@ -71,7 +71,17 @@ class PostDetailView(DetailView):
 
 
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from .forms import PostCreateForm
 
+
+class PostCreateView(LoginRequiredMixin, FormView):
+    model = Post
+    form_class = PostCreateForm 
+    success_url = reverse_lazy("index")
+    login_url = reverse_lazy("login")
+    template_name = "includes/post_create.html"
 
 
 

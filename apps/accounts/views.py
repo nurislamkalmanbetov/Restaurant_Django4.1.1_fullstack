@@ -5,7 +5,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 
-
 from apps.accounts.forms import LoginForm, UserRegisterForm
 from apps.accounts.models import User 
 from apps.accounts.utils import send_activation_email
