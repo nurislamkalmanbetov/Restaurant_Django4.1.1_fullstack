@@ -83,9 +83,13 @@ class PostCreateView(LoginRequiredMixin, FormView):
     login_url = reverse_lazy("login")
     template_name = "includes/post_create.html"
 
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user 
+        post.save()
+        return super().form_valid(form) 
 
-
-
+    
 
 
 

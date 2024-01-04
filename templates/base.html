@@ -65,19 +65,21 @@
                                     <li>
                                         <a href="{% url 'category_list' %}">Категории</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Рецепты</a>
-                                    </li>
 
                                     <li><a href="{% url 'post_list' %}">Посты</a>
                                     </li>
+
                                     <li><a href="#">Магазин</a>
                                         <ul class="dropdown-menu-col-1">
                                             <li><a href="shop.html">Покупки</a></li>
                                             <li><a href="single-shop.html">Shop Details</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="contact.html">Контакты</a></li>
+                                        <li><a href="contact.html">Контакты</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Рецепты</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -180,7 +182,7 @@
                                     </li>
                                     {% endif %}
                                     <li>
-                                        <a href="submit-recipe.html" class="fill-btn"><i class="flaticon-plus-1"></i>Добавить Рецепт</a>
+                                        <a href="{% url 'post_create' %}" class="fill-btn"><i class="flaticon-plus-1"></i>Добавить пост</a>
                                     </li>
                                 </ul>
                             </div>
