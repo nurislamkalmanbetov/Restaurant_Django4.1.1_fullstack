@@ -149,35 +149,32 @@
                                     {% if request.user.is_authenticated %}
                                     <li>
                                         <div class="dropdown">
-                                        <a style="color: white;" class="dropdown-toggle" data-toggle="dropdown">{{request.user.email}}!</a>
-
+                                        <a style="color:white;" class="dropdown-toggle" data-toggle="dropdown">{{request.user.email }}</a>
                                         <!-- <a href="{% url 'logout' %}">
                                             <button type="button" class="login-btn">
                                                 Выйти
                                             </button>
                                         </a> -->
-
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-
+                                            <a class="dropdown-item" href="{% url 'author_posts' %}">Мои посты</a>
+                                            <a class="dropdown-item" href="#"> Мои заказы </a>
+                                            <a class="dropdown-item" href="#">Профиль</a>
+                                            <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+                                          </div>
                                         </div>
                                     </li>
-
                                     {% else %}
                                     <li>
                                         <a href="{% url 'login' %}">
-                                            <button type="button" class="login-btn">
-                                                <i class="flaticon-profile"></i>Войти
-                                            </button>
+                                        <button type="button" class="login-btn">
+                                            <i class="flaticon-profile"></i>Логин
+                                        </button>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{% url 'register' %}">
                                             <button type="button" class="login-btn">
-                                                Регистрация
+                                            Регистрация
                                             </button>
                                         </a>
                                     </li>
@@ -830,35 +827,35 @@
         </section> -->
         <!-- Instagram Start Here -->
 
-        <!-- <section class="instagram-feed-wrap">
+        <section class="instagram-feed-wrap">
             <div class="instagram-feed-title"><a href="#"><i class="fab fa-instagram"></i>Follow On Instagram</a></div>
             <ul class="instagram-feed-figure">
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure1.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure1.jpg' %}" alt="Social"></a>
                 </li>
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure2.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure2.jpg' %}" alt="Social"></a>
                 </li>
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure3.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure3.jpg' %}" alt="Social"></a>
                 </li>
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure4.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure4.jpg' %}" alt="Social"></a>
                 </li>
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure5.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure5.jpg' %}" alt="Social"></a>
                 </li>
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure6.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure6.jpg' %}" alt="Social"></a>
                 </li>
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure7.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure7.jpg' %}" alt="Social"></a>
                 </li>
                 <li>
-                    <a href="single-recipe1.html"><img src="img/social-figure/social-figure8.jpg" alt="Social"></a>
+                    <a href="single-recipe1.html"><img src="{% static 'img/social-figure/social-figure8.jpg' %}" alt="Social"></a>
                 </li>
             </ul>
-        </section> -->
+        </section>
         <!-- Instagram End Here -->
         
         <!-- Footer Area Start Here -->

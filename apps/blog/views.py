@@ -90,8 +90,13 @@ class PostCreateView(LoginRequiredMixin, FormView):
         return super().form_valid(form) 
 
     
+class AuthorPostsListView(LoginRequiredMixin, ListView):
+    template_name = "author_posts.html"
+    model = Post
 
-
+    def get_queryset(self):
+        qs = Post.objects.filter(author=self.request.user)
+        return qs
 
 
 
