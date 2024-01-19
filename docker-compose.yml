@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:15
+    expose:
+      - "5432"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=FOODTALES3  # Устанавливаем имя базы данных
+      - POSTGRES_USER=postgres  # Замените "your_username" на ваше имя пользователя
+      - POSTGRES_PASSWORD=qwerty123  # Замените "your_password" на ваш пароль
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      
+
+  web:
+    build: . 
+    restart: always
+    command: >
+      bash -c "python manage.py migrate && python manage.py loaddata data.json && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
