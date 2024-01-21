@@ -89,7 +89,8 @@ DATABASES = {
         'NAME': 'FOODTALES3',
         'USER': 'postgres',
         'PASSWORD': 'qwerty123',
-        'HOST': 'db',
+        'HOST': 'localhost',
+        # 'db', for Docker
         'PORT': '5432',
     }
 }

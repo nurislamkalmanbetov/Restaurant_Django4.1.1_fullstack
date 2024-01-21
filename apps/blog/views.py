@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView, FormView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import (
+    TemplateView, ListView, DetailView, FormView, DeleteView, UpdateView
+)
 from apps.blog.models import Category, Post
 from django.contrib.auth.models import User
 
@@ -58,12 +60,11 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.filter(is_draft=False) 
-        latest_four_posts = Post.objects.filter(is_draft=False).order_by('-created') 
-        if len(latest_four_posts) < 4:
-            context["latest_four_posts"] = latest_four_posts
+        latest_posts = Post.objects.filter(is_draft=False).order_by('-created') 
+        if len(latest_posts) < 4:
+            context["latest_posts"] = latest__posts
         else:
-            context["latest_four_posts"] = latest_four_posts[:4]
+            context["latest_posts"] = latest_posts[:4]
 
         context["categories"] = Category.objects.all()
 
@@ -81,7 +82,7 @@ class PostCreateView(LoginRequiredMixin, FormView):
     form_class = PostCreateForm 
     success_url = reverse_lazy("index")
     login_url = reverse_lazy("login")
-    template_name = "includes/post_create.html"
+    template_name = "post_create.html"
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -94,23 +95,60 @@ class AuthorPostsListView(LoginRequiredMixin, ListView):
     template_name = "author_posts.html"
     model = Post
 
+
     def get_queryset(self):
-        qs = Post.objects.filter(author=self.request.user)
+        qs = Post.objects.filter(author=self.request.user)  
         return qs
 
-
-
-
-
-
-
-
-
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        latest_posts = Post.objects.filter(is_draft=False).order_by("-created")
+        if len(latest_posts) < 4:
+            context["latest_posts"] = latest_posts
+        else:
+            context["latest_posts"] = latest_posts[:4]
+
+        context["categories"] = Category.objects.all()
+
+        return context
 
 
 
+from django.http import Http404
 
+
+
+def delete_author_post(request, pk):
+    # try:
+    #     post = Post.objects.get(id=pk)
+    # except Post.DoesNotExist:
+    #     raise Http404("Post does not exist")
+
+    post = get_object_or_404(Post, id=pk)
+    post.delete()
+    return redirect(reverse_lazy("author_posts"))
+
+
+def deactivate_author_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    post.is_draft = True
+    post.save(update_fields=["is_draft"])
+    return redirect(reverse_lazy("author_posts"))
+
+
+def activate_author_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    post.is_draft = False
+    post.save(update_fields=["is_draft"])
+    return redirect(reverse_lazy("author_posts"))
+
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = PostCreateForm
+    model = Post 
+    success_url= reverse_lazy("author_posts")
+    template_name = "post_create.html"
 
 
 
